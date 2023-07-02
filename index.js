@@ -163,6 +163,37 @@ app.get('/insertNotCoveredData', async (req, res) => {
   
 });
 
+app.get('/citizenNotif', async (req, res) => {
+
+  res.send('Data stored successfully!');
+  var data = JSON.stringify({
+    "app_id": "b87bb736-ff08-4e3d-be15-577443893be3",
+    "contents": {"en": "Your garbage pickup vehicle is arriving soon"},
+    "include_player_ids": ["b0e8ae00-5cd6-4cff-ab99-a27b3e7cefbf"],
+    "android_sound": "notif",
+    "existing_android_channel_id": "alertNotif"
+});
+
+  let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'https://onesignal.com/api/v1/notifications',
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  axios.request(config)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  
+});
+
 function sendNotif(msg) {
 
     let message = ""
